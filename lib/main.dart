@@ -6,72 +6,52 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Profile Page',
+      title: 'Navigation Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: HomeScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var assetsImage = AssetImage(
-        'assets/images/foto.jpg'); //<- Creates an object that fetches an image.
-    var image = Image(image: assetsImage, fit: BoxFit.cover);
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: Text('Home'),
       ),
       body: Center(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Container(
-                child: image,
-              ),
-            ),
-            Text(
-              'Alecia Maharani Ektya Antara',
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            SizedBox(height: 2),
-            Text(
-              '2009116073',
-              style: TextStyle(
-                fontSize: 22,
-                color: Colors.black,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ],
+        child: ElevatedButton(
+          child: Text('Go to Details Screen'),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DetailsScreen()),
+            );
+          },
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: Icon(Icons.add),
-      // ),
+    );
+  }
+}
+
+class DetailsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Details'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: Text('Go back to Home Screen'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
     );
   }
 }
