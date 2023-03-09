@@ -1,12 +1,34 @@
 import 'package:flutter/material.dart';
-import 'matkul.dart';
 
-class ProfilePage extends StatefulWidget {
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Profile Page',
+      theme: ThemeData(
+        primarySwatch: Colors.blueGrey,
+      ),
+      home: MyHomePage(),
+    );
+  }
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var assetsImage = AssetImage(
@@ -41,15 +63,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 color: Colors.black,
                 fontWeight: FontWeight.w400,
               ),
-            ),
-            ElevatedButton(
-              child: Text('Lihat Matkul'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MatkulPage()),
-                );
-              },
             ),
           ],
         ),

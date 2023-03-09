@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'profile.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,46 +11,78 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      home: LoginPage(),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          child: Text('Go to Details Screen'),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => DetailsScreen()),
-            );
-          },
-        ),
-      ),
-    );
-  }
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class DetailsScreen extends StatelessWidget {
+class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _username = '';
+  String _password = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Details'),
+        title: Text('Login Page'),
       ),
-      body: Center(
-        child: ElevatedButton(
-          child: Text('Go back to Home Screen'),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+      body: Container(
+        padding: EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              TextFormField(
+                validator: (input) {
+                  if (input == null || input.isEmpty) {
+                    return 'Please enter your username';
+                  }
+                  return null;
+                },
+                onSaved: (input) {
+                  if (input != null) {
+                    _username = input;
+                  }
+                },
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                ),
+              ),
+              TextFormField(
+                validator: (input) {
+                  if (input == null || input.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  return null;
+                },
+                onSaved: (input) => _password = input ?? '',
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                ),
+                obscureText: true,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState?.validate() ?? false) {
+                    // _formKey.currentState
+                    //     ?.save(); // Add null-aware access operator
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => ProfilePage()),
+                    );
+                  }
+                },
+                child: Text('Login'),
+              ),
+            ],
+          ),
         ),
       ),
     );
